@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualization Webpage</title>
+</head>
+<body>
+    <h1>Visualization Webpage</h1>
+    
+    {% if plot_path %}
+        <img src="{{ plot_path }}" alt="Visualization">
+    {% else %}
+        <p>Data structure not supported for generic visualization.</p>
+    {% endif %}
+
+    <h2>Aggregation Result:</h2>
+    <p>Total Results: {{ aggregation_result }}</p>
+
+    <h2>Search Movies:</h2>
+    <form action="{{ url_for('search_movies') }}" method="post">
+        <label for="movie_name">Enter Movie Name:</label>
+        <input type="text" id="movie_name" name="movie_name" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Search Result:</h2>
+    {% if search_result.search_results %}
+        <ul>
+            {% for movie in search_result.search_results %}
+                <li>{{ movie.title }} ({{ movie.year }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found for the search query.</p>
+    {% endif %}
+</body>
+</html>
